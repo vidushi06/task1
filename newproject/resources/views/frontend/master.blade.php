@@ -42,6 +42,13 @@
     
 
 <ol class="list-group list-group-numbered">
+  @if(session('message'))
+
+         <p class ="alert alert-success">
+          {{session('message')}}
+         </p>
+          
+    @endif
   @foreach($a as $c)
   <li class="list-group-item d-flex justify-content-between align-items-start">
     <div class="ms-2 me-auto">
@@ -50,6 +57,11 @@
         <img src="/upload/{{$c->image}}" width="300">
       </a>
     </div>
+    <span>
+      <a href="{{url('products/'.$c->id)}}" class="btn btn-warning">View Product</a>
+      <a href="{{url('edit-categories/'.$c->id)}}" class="btn btn-primary">Edit</a>
+        <a href="{{url('delete-categories/'.$c->id)}}" class="btn btn-danger">Delete</a>
+    </span>
   </li>
   @endforeach
 </ol>

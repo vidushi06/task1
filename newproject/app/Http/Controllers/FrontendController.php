@@ -67,4 +67,52 @@ class FrontendController extends Controller
          }
         }
     }
+
+    public function deletecat($id)
+    {
+       $res=categories::where('id',$id)->delete();
+
+       if ($res) {
+          return Redirect::back()->with('message','category sucessfully deleted');
+       }
+    }
+
+    public function editcat($id)
+    {
+        $data = categories::find($id);
+        return view('frontend.editcat',compact('data'));
+    }
+
+    public function updatecat(Request $a)
+    {
+       // echo "<pre>";
+        // print_r($a->all()); // hasFile check karta hai ki image ai hai ya ni
+        if ($a->hasFile('image')) {
+            $file = $a->file('image');
+        // dd($file);//dump and die
+        // exit;
+        $filename = 'image'. time().'.'.$a->image->extension();
+            // dd($filename);
+            // exit;
+         $file->move("upload/",$filename);
+         //dd($file);
+         //exit;
+         $data = categories::find($a->id);
+         $data->title = $a->title;
+         $data->image = $filename;
+    
+         $data->save();
+         if ($data) {
+             return Redirect::back()->with('message','dish sucessfully edited');
+         }
+        }
+        else{
+            $data = categories::find($a->id);
+            $data->title = $a->title;
+             $data->save();
+              if ($data) {
+             return Redirect::back()->with('message','category sucessfully edited');
+         }
+        }
+    }
 }

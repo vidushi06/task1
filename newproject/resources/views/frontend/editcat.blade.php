@@ -32,6 +32,8 @@
             
           </ul>
           <form class="d-flex">
+            
+
             <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success" type="submit">Search</button>
           </form>
@@ -40,7 +42,8 @@
     </nav>
 
 
-    <table class="table table-stripped table-hover">
+    <div class="container">
+      <br>
       @if(session('message'))
 
          <p class ="alert alert-success">
@@ -48,34 +51,26 @@
          </p>
           
     @endif
-  <thead>
-    <tr>
-      <th scope="col">id</th>
-      <th scope="col">Product Name</th>
-      <th scope="col">Description</th>
-      <th scope="col">Image</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-     @foreach($d1 as $a)
-    <tr>
-      <th scope="row">{{$a->id}}</th>
-      <td>{{$a->dish_name}}</td>
-      <td>{{$a->dish_description}}</td>
-      <td><img src="/upload/{{$a->image}}" width="200"></td>
-      <td>
-        <a href="{{url('edit/'.$a->id)}}" class="btn btn-primary">Edit</a>
-        <a href="{{url('delete/'.$a->id)}}" class="btn btn-danger">Delete</a>
-      </td>
-    </tr>
-    @endforeach
-  </tbody>
-</table>
+      <form class="form-group" method="post" action="{{url('updatecat')}}" enctype="multipart/form-data">
+                      @csrf
+                    <input type="hidden" name="id" value="{{$data->id}}">
+                    Title:
+                    <input type="text" name="title" value="{{$data->title}}" class="form-control" >
+                    <br>
+                    
+                    Image:
+                    <input class="form-control" type="file" id="formFile" name="image">
+                    <br>
+                    <img src="/upload/{{$data->image}}" width="600">
+                    <br><br>
+                    <input type="submit" name="submit" value="submit" class="btn btn-info" >
+                    </form>
+      
+    </div>
 
 
     <!-- Footer -->
-    <footer class="bg-dark text-center text-white fixed-bottom">
+    <footer class="bg-dark text-center text-white">
       <!-- Grid container -->
       <div class="container p-4">
         <!-- Section: Form -->
